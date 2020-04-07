@@ -1,6 +1,5 @@
-/*
-    Callback es una función que se ejecuta cuando algo sucede.
-*/
+// Callback es una función que se ejecuta cuando algo sucede.
+
 
 setTimeout(
     () => { console.log('Hola mundo'); } // Esta función de flecha es un callback, se ejecuta cuando pasa 1 segundo.
@@ -29,7 +28,7 @@ let getUserById = (id, callbackFunction) => {
 // vemos dentro de la función getUserById que la función tiene que recibir un parámetro.
 // Convención en las funciones callback es que el primer parámetro sea un posible error.
 let myCustomCallback = (err, user) => {
-    if (err != null)
+    if (err) // Esto es lo mismo que "err!=null"
         return console.log('Error: ', err);
 
     console.log('Usuario recuperado: ', user);

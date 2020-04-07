@@ -13,7 +13,7 @@ let persona = {
 
         }
         /*
-        Same sintax (note that here we don`t have ': function'):
+        Different sintax (note that here we don`t have ': function'):
         getDescription() {
             return `${this.nombre} ${this.mote} ${this.profesion}`
         }
