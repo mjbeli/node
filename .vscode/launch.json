@@ -22,5 +22,14 @@
             ],
             "program": "${workspaceFolder}\\01-basic-concepts\\callback-exercise.js"
         }
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Promesas",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}\\01-basic-concepts\\promesas.js"
+        }
     ]
 }
