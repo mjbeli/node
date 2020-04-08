@@ -31,5 +31,14 @@
             ],
             "program": "${workspaceFolder}\\01-basic-concepts\\promesas.js"
         }
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Async-await",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}\\01-basic-concepts\\async-await.js"
+        }
     ]
 }

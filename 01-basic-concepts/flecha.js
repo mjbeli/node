@@ -23,7 +23,7 @@ let persona = {
     nombre: 'Gandalf',
     mote: 'El Gris',
     profesion: 'mago aventurero',
-    getDescription: () => `${this.nombre} ${this.mote} ${this.profesion}`
+    getDescription: () => `${this.nombre} ${this.mote} ${this.profesion}` // esto imprime undefined undefined undefined
         /*
         Si usamos "this" dentro de una función de flecha en una estructura
         no hacemos referencia a las variables de la estructura, sino a una
