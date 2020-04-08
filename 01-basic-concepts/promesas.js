@@ -60,7 +60,7 @@ getEmpleado(1).then(
 // El then sigue teniendo 2 funciones como parámetros, la primera es el resolve y la segundo el reject.
 // Cuando la respuesta del resolve incluye otra promesa, se puede encadenar otro then que se ejecutará 
 // como resolve de la promesa anidada.
-getEmpleado(2).then(
-        empleado => { return getSalario(empleado); } // No hace falta reject porque se ejecutará el catch para todos.
-    ).then(infoData => { console.log(`El empleado ${infoData.nombre} recibe ${infoData.salario} monedas de oro`); })
+getEmpleado(2)
+    .then(empleado => { return getSalario(empleado); }) // No hace falta reject porque se ejecutará el catch para todos.
+    .then(infoData => { console.log(`El empleado ${infoData.nombre} recibe ${infoData.salario} monedas de oro`); })
     .catch(err => { console.log('Error: ', err); }); // Este es el código de los 2 reject (getEmpleado y getSalario).
