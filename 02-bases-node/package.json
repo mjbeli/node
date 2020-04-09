@@ -1,0 +1,14 @@
+{
+  "name": "02-bases-node",
+  "version": "1.0.0",
+  "description": "Aplicación para practicar con las bases de node",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "mjbeli",
+  "license": "ISC",
+  "dependencies": {
+    "yargs": "^15.3.1"
+  }
+}
