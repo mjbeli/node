@@ -1,9 +1,13 @@
+const argv = require('yargs')
+    .command('calcular', 'Imprime en fichero tabla de multiplicar.', {
+        base: { demand: true, alias: 'b' }
+    }).argv;
+
 // const multiplicarOp = require('./operators/multiplicar');
 //// Ahora se pueden usar los elementos del module.exports
 //// de ./operators/multiplocar.js de la siguiente forma: 
 // multiplicarOp.crearArchivo(base)
 //    .then(archivo => { console.log(`Creado el archivo ${archivo}!!!`); });
-
 // Otra forma de importar sería usando la desestructuración:
 const { crearArchivo } = require('./operators/multiplicar'); // Ahora se puede usar directamente como se muestra más abajo.
 
@@ -15,6 +19,10 @@ const { crearArchivo } = require('./operators/multiplicar'); // Ahora se puede u
 //node app --base=8
 // Hacerlo de esta forma requiere mucha validación de lo que recibimos
 // por la línea de comandos, ¿es correcto el nombre del parámetro? ¿es lo que esperamos?
+
+let base = argv.base;
+console.log(`Argumentos recibidos: ${argv}`);
+console.log(`Base recibida: ${base}`);
 
 crearArchivo(base)
     .then(archivo => { console.log(`Creado el archivo ${archivo}!!!`); })
