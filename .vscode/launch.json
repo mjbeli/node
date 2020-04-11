@@ -40,5 +40,14 @@
             ],
             "program": "${workspaceFolder}\\01-basic-concepts\\async-await.js"
         }
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch RestServer",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}\\restserver\\server\\server.js"
+        }
     ]
 }

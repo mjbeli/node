@@ -17,7 +17,7 @@ app.get('/server', function(req, res) {
     res.json('Hola mundo'); // --> envía en formato json
 });
 
-app.use(require('./controllers/usuario')); // Importamos y usamos el fichero /controllers/usuario.js
+app.use(require('./controllers/usuarioController')); // Importamos y usamos el fichero /controllers/usuario.js
 
 
 mongoose.connect('mongodb://localhost:27017/cafe', {
