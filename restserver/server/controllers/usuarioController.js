@@ -5,7 +5,7 @@ const Usuario = require('../models/usuario'); // No es necesaria la mayúscula p
 
 const app = express();
 
-// Petición: /usuario?desde=10&limite=5
+// Petición GET: /usuario?desde=10&limite=5
 app.get('/usuario', function(req, res) {
 
     let desde = req.query.desde || 0; // Si petición no tiene parámetro, por defecto 0.
@@ -15,7 +15,7 @@ app.get('/usuario', function(req, res) {
     limite = Number(limite);
 
     Usuario
-        .find({}, 'nombre email') // Primer parámetro son las condiciones de búsqueda, segundo parámetro los campos que se van a devolver.
+        .find({ estado: true }, 'nombre email') // Primer parámetro son las condiciones de búsqueda, segundo parámetro los campos que se van a devolver.
         .skip(desde) // se salta los primeros N registros
         .limit(limite) // muestra solo los primeros N registros de la búsqueda.
         .exec((err, usuarios) => {
@@ -27,7 +27,7 @@ app.get('/usuario', function(req, res) {
         });
 
     // Para contar resultados.
-    Usuario.count({}, // Misma condición que en el find
+    Usuario.count({ estado: true }, // Misma condición que en el find
         (err, conteo) => {});
 });
 
@@ -55,7 +55,7 @@ app.post('/usuario', function(req, res) {
 
 });
 
-// Actualizar registro: requiere recepción de parámetro por URL
+// Actualizar registro: requiere recepción de parámetro por URL PUT /usuario/5e931eb9d96ce12bf4e29c5d
 app.put('/usuario/:id', function(req, res) {
     let id = req.params.id;
 
@@ -69,10 +69,10 @@ app.put('/usuario/:id', function(req, res) {
 
     // Doc: https://mongoosejs.com/docs/api.html#model_Model.findByIdAndUpdate
     Usuario.findByIdAndUpdate(id, body, // objeto que queremos actualizar, directamente el body
-        {
+        { // Opciones
             new: true, // enviar respuesta con el objeto actualizado en lugar del original.
-            runValidators: true
-        }, // aplicar validaciones definidas en el esquema (por ejemplo roles definidos)
+            runValidators: true // aplicar validaciones definidas en el esquema (por ejemplo roles definidos)
+        },
         (err, usuarioDB) => {
 
             if (err)
@@ -88,8 +88,34 @@ app.put('/usuario/:id', function(req, res) {
 
 });
 
-app.delete('/usuario', function(req, res) {
-    res.json('delete a usuario');
+// Petición delete: /usuario/5e931eb9d96ce12bf4e29c5d
+app.delete('/usuario/:id', function(req, res) {
+
+    let id = req.params.id;
+
+    /* Borrado físico 
+    Usuario.findByIdAndRemove(id, (err, deletedUser) => {
+        if (err)
+            return res.status(400).json({ ok: false, err });
+        if (!deletedUser)
+            return res.status(400).json({ ok: false, err: { msg: 'Usuario no encontrado' } });
+        res.json({ ok: true, usuario: deletedUser });
+    });
+     FIN Borrado físico */
+
+    /* Borrado lógico */
+    let cambiaEstado = { estado: false };
+
+    Usuario.findByIdAndUpdate(id, // id del objeto que quiero cambiar.
+        cambiaEstado, // Campos que quiero cambiar.
+        { new: true }, // opciones, devuelve el objeto actualiado.
+        (err, deletedUser) => { // callback
+            if (err)
+                return res.status(400).json({ ok: false, err });
+            if (!deletedUser)
+                return res.status(400).json({ ok: false, err: { msg: 'Usuario no encontrado' } });
+            res.json({ ok: true, usuario: deletedUser });
+        });
 });
 
 
