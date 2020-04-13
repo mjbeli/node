@@ -20,7 +20,7 @@ app.get('/server', function(req, res) {
 app.use(require('./controllers/usuarioController')); // Importamos y usamos el fichero /controllers/usuario.js
 
 
-mongoose.connect('mongodb://localhost:27017/cafe', {
+mongoose.connect(process.env.URLDB, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     },
