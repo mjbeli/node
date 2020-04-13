@@ -39,7 +39,7 @@ app.post('/usuario', function(req, res) {
     let usuarioObj = new Usuario({
         nombre: body.nombre, // El nombre de los parámetros del body es case sensitive!
         email: body.email,
-        password: bcrypt.hashSync(body.password, 10), // encriptar la pass con bcrypt de forma asíncrona
+        password: bcrypt.hashSync(body.password, 10), // encriptar la pass con bcrypt de forma asíncrona. Por defecto algoritmo HS256.
         role: body.role
     });
 
