@@ -26,10 +26,10 @@ app.post('/login', function(req, res) {
             if (!bcrypt.compareSync(body.password, dbUser.password))
                 return res.status(400).json({ ok: false, err: { msg: 'Usuario o pass no es correcto' } });
 
-            // Todo ha ido bien,  generar y devolver token. Doc: https://www.npmjs.com/package/jsonwebtoken
-            let generatedToken = jwt.sign({ usuario: dbUser }, // primer parámetro: obj que será el payload del token
+            // Todo ha ido bien, generar y devolver token. Doc: https://www.npmjs.com/package/jsonwebtoken
+            let generatedToken = jwt.sign({ usuario: dbUser }, // primer parámetro: obj que será el payload del token, el objeto usuario estará disponible en el objeto req de todas las peticiones, ya que estará en el payload del token que se enviará en todas las peticiones.
                 process.env.SEMILLA_TOKEN, // segundo parámetro: la semilla para generar el token
-                { expiresIn: process.env.EXPIRACION_TOKEN } // tercer parámetro: caducidad token (en config/config.js)
+                { expiresIn: process.env.EXPIRACION_TOKEN } // tercer parámetro, opciones: caducidad token (en config/config.js)
             );
 
             res.json({

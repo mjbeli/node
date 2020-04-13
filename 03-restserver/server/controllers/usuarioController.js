@@ -3,33 +3,37 @@ const bcrypt = require('bcrypt');
 const _ = require('underscore'); // https://underscorejs.org/
 const Usuario = require('../models/usuario'); // No es necesaria la mayúscula pero es un estandard.
 
+const verificaToken = require('../middlewares/autenticacion');
+
 const app = express();
 
 // Petición GET: /usuario?desde=10&limite=5
-app.get('/usuario', function(req, res) {
+app.get('/usuario',
+    verificaToken.verificaToken, // Aquí no se ejecuta esta función, solo se determina el middleware que se va a usar.
+    (req, res) => {
 
-    let desde = req.query.desde || 0; // Si petición no tiene parámetro, por defecto 0.
-    desde = Number(desde);
+        let desde = req.query.desde || 0; // Si petición no tiene parámetro, por defecto 0.
+        desde = Number(desde);
 
-    let limite = req.query.limite || 5;
-    limite = Number(limite);
+        let limite = req.query.limite || 5;
+        limite = Number(limite);
 
-    Usuario
-        .find({ estado: true }, 'nombre email') // Primer parámetro son las condiciones de búsqueda, segundo parámetro los campos que se van a devolver.
-        .skip(desde) // se salta los primeros N registros
-        .limit(limite) // muestra solo los primeros N registros de la búsqueda.
-        .exec((err, usuarios) => {
-            if (err)
-                return res.status(400).json({ ok: false, err });
+        Usuario
+            .find({ estado: true }, 'nombre email') // Primer parámetro son las condiciones de búsqueda, segundo parámetro los campos que se van a devolver.
+            .skip(desde) // se salta los primeros N registros
+            .limit(limite) // muestra solo los primeros N registros de la búsqueda.
+            .exec((err, usuarios) => {
+                if (err)
+                    return res.status(400).json({ ok: false, err });
 
-            res.json({ ok: true, usuarios });
+                res.json({ ok: true, usuarios });
 
-        });
+            });
 
-    // Para contar resultados.
-    Usuario.count({ estado: true }, // Misma condición que en el find
-        (err, conteo) => {});
-});
+        // Para contar resultados.
+        Usuario.count({ estado: true }, // Misma condición que en el find
+            (err, conteo) => {});
+    });
 
 
 app.post('/usuario', function(req, res) {

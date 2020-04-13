@@ -47,7 +47,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\restserver\\server\\server.js"
+            "program": "${workspaceFolder}\\03-restserver\\server\\server.js"
         }
     ]
 }
