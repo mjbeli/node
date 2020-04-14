@@ -10,7 +10,10 @@ let verificaToken = (req, res, next) => {
         process.env.SEMILLA_TOKEN,
         (err, decoded) => {
             if (err)
-                return res.status(401).json({ ok: false, err });
+                return res.status(401).json({
+                    ok: false,
+                    err: { message: 'Token no válido' }
+                });
 
             // Si todo ha ido bien, el decoded contendrá el payload del token. 
             // En el payload se está insertando el usuario de bbdd en la función jwt.sign() llamada en loginController.
