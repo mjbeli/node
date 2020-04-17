@@ -25,5 +25,5 @@ process.env.URLDB = urlDB;
 // ============================
 // Token
 // ============================
-process.env.EXPIRACION_TOKEN = 60 * 60 * 24 * 30; // Vencimiento 60 segundos, 60 minutos, 24 horas, 30 días
+process.env.EXPIRACION_TOKEN = 2592000; // Vencimiento 60 segundos, 60 minutos, 24 horas, 30 días
 process.env.SEMILLA_TOKEN = process.env.SEMILLA_TOKEN || 'semilla-de-desarrollo'; // La semilla para generar el token

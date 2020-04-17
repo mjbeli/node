@@ -3,13 +3,13 @@ const bcrypt = require('bcrypt');
 const _ = require('underscore'); // https://underscorejs.org/
 const Usuario = require('../models/usuario'); // No es necesaria la mayúscula pero es un estandard.
 
-const verificaToken = require('../middlewares/autenticacion');
+const middlewaresCheck = require('../middlewares/autenticacion');
 
 const app = express();
 
 // Petición GET: /usuario?desde=10&limite=5
 app.get('/usuario',
-    verificaToken.verificaToken, // Aquí no se ejecuta esta función, solo se determina el middleware que se va a usar.
+    middlewaresCheck.verificaToken, // Aquí no se ejecuta esta función, solo se determina el middleware que se va a usar.
     (req, res) => {
 
         let desde = req.query.desde || 0; // Si petición no tiene parámetro, por defecto 0.
@@ -36,8 +36,7 @@ app.get('/usuario',
     });
 
 
-app.post('/usuario',
-    verificaToken.verificaToken,
+app.post('/usuario', [middlewaresCheck.verificaToken, middlewaresCheck.checkAdminRole],
     (req, res) => {
         let body = req.body; // Este body está disponible gracias al paquete body-parser instalado.
 
@@ -62,8 +61,7 @@ app.post('/usuario',
     });
 
 // Actualizar registro: requiere recepción de parámetro por URL PUT /usuario/5e931eb9d96ce12bf4e29c5d
-app.put('/usuario/:id',
-    verificaToken.verificaToken,
+app.put('/usuario/:id', [middlewaresCheck.verificaToken, middlewaresCheck.checkAdminRole],
     (req, res) => {
         let id = req.params.id;
 
@@ -96,8 +94,7 @@ app.put('/usuario/:id',
     });
 
 // Petición delete: /usuario/5e931eb9d96ce12bf4e29c5d
-app.delete('/usuario/:id',
-    verificaToken.verificaToken,
+app.delete('/usuario/:id', [middlewaresCheck.verificaToken, middlewaresCheck.checkAdminRole],
     (req, res) => {
 
         let id = req.params.id;

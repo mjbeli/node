@@ -1,6 +1,6 @@
-// Verificar token correcto
 const jwt = require('jsonwebtoken');
 
+// Verificar token correcto
 let verificaToken = (req, res, next) => {
 
     // Podemos obtener los headers de la petición de la siguiente forma:
@@ -18,7 +18,7 @@ let verificaToken = (req, res, next) => {
             // Si todo ha ido bien, el decoded contendrá el payload del token. 
             // En el payload se está insertando el usuario de bbdd en la función jwt.sign() llamada en loginController.
             req.usuario = decoded.usuario;
-            //res.json({ token: receiveToken }); --> esto retornaría el token recibido pero NO seguiría ejecutando nada más.
+            //return res.json({ token: receiveToken }); --> esto retornaría el token recibido pero NO seguiría ejecutando nada más.
             //                                      para que se siga ejecutando la lógica del GET de usuario ponemos el next().
             next();
         } // fin función flecha
@@ -26,4 +26,11 @@ let verificaToken = (req, res, next) => {
 
 };
 
-module.exports = { verificaToken };
+let checkAdminRole = (req, res, next) => {
+    let user = req.usuario;
+    if (user.role != 'ADMIN_ROLE')
+        return res.json({ ok: false, err: { message: 'El usuario no tiene rol administrador' } });
+    next(); // Si el usuario es Admin, seguimos la ejecución.
+};
+
+module.exports = { verificaToken, checkAdminRole };
