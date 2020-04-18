@@ -19,7 +19,7 @@ io.on('connection',
             else
                 callback({ mensaje: 'Algo fue mal!!!.' });
 
-            // Si aquí dentro hacemos un client.emit, se envia por defecto solo al
+            // Si aquí dentro hacemos un client.emit, se enviará un evento por defecto solo al
             // usuario que ha enviado el evento 'enviarMensaje'
             // Si queremos enviar a todos los usuarios conectados, podemos usar client.broadcast.emit(.....);
 
